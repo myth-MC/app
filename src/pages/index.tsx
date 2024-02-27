@@ -1,182 +1,137 @@
 import Head from "next/head";
 import Image from "next/image";
 
-import { parseSaveFile } from "@/lib/file";
-import { ChangeEvent, useContext, useRef } from "react";
-
-import { toast } from "sonner";
-
-import { PlayersContext } from "@/contexts/players-context";
-
 import Link from "next/link";
 
+import {PlayerNameInputCard} from "@/components/cards/player-name-input-card";
+import {IconSearch} from "@tabler/icons-react";
+
 export default function Home() {
-  const { uploadPlayers } = useContext(PlayersContext);
-
-  const inputRef = useRef<HTMLInputElement | null>(null);
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
-
-    const file = e.target!.files![0];
-
-    if (typeof file === "undefined" || !file) return;
-
-    if (file.type !== "") {
-      toast.error("Invalid File Type", {
-        description: "Please upload a Stardew Valley save file.",
-      });
-      return;
-    }
-
-    const reader = new FileReader();
-
-    reader.onloadstart = () => {
-      toast.loading("Uploading Save File", {
-        description: "Please wait while we upload your save file.",
-      });
-    };
-
-    reader.onload = async function (event) {
-      try {
-        const players = parseSaveFile(event.target?.result as string);
-        await uploadPlayers(players);
-        toast.success("Uploaded Save File", {
-          description: "Your save file has been uploaded successfully",
-        });
-      } catch (err) {
-        toast.error("Error Parsing File", {
-          description: err instanceof Error ? err.message : "Unknown error.",
-        });
-      }
-    };
-    reader.readAsText(file);
-  };
   return (
     <>
       <Head>
-        <title>stardew.app | Stardew Valley 100% completion</title>
-        <meta
-          name="description"
-          content="The homepage for stardew.app. Upload your Stardew Valley Save File to track your progress towards 100% completion. Login to track your perfection progress across multiple devices."
-        />
-        <meta
-          name="keywords"
-          content="stardew valley tracker, stardew tracker, stardew valley perfection tracker, stardew perfection tracker, stardew completion tracker, stardew valley collection tracker, stardew progress checker, stardew valley checklist app, stardew valley tracker app, stardew valley app, stardew app, perfection tracker stardew, stardew checker, stardew valley checker, stardew valley completion tracker, tracker stardew valley, stardew valley save checker, stardew valley companion app, stardew valley progress tracker, stardew valley checklist app, stardew valley, stardew valley tracker app, stardew valley app"
-        />
+        <title>mythMC | Estadísticas</title>
       </Head>
       <main
-        className={`flex min-h-[calc(100vh-65px)]  flex-col md:border-l border-neutral-200 dark:border-neutral-800 pt-2 pb-8 px-5 md:px-8 items-center`}
+          className={`flex min-h-[calc(100vh-65px)]  flex-col md:border-l border-neutral-200 dark:border-neutral-800 pt-2 pb-8 px-5 md:px-8 items-center`}
       >
         <main className="flex flex-col items-center justify-center flex-grow max-w-2xl">
           <div className="flex items-center gap-2 mb-4">
             <Image
-              src="/favicon.png"
-              alt="Log in with Discord"
-              className="rounded-sm"
-              width={64}
-              height={64}
+                src="/favicon.png"
+                alt="Logotipo de mythMC"
+                className="rounded-sm"
+                width={64}
+                height={64}
             />
-            <h2 className="text-3xl font-semibold text-center">stardew.app</h2>
+            <h2 className="text-3xl font-semibold text-center">app.mythmc.ovh</h2>
           </div>
           <h3 className="text-lg font-normal text-center">
-            Your ultimate sidekick for conquering Stardew Valley. Seamlessly
-            upload your save files and let us do the heavy lifting, or take the
-            reins and manually update your progress. Join us in embracing the
-            thrills of growth, the joys of harvest, and the satisfaction of
-            inching closer to that coveted 100% completion in the heartwarming
-            world of Stardew Valley.
+          Consulta tus estadísticas de mythMC en directo.
           </h3>
         </main>
+        <div className="p-2 w-300 flex-grow">
+          <PlayerNameInputCard
+              key="buscar"
+              title="Buscar"
+              Icon={IconSearch}
+              description="Introduce el nombre del usuario que quieres buscar."
+              showTitle={true}
+          />
+        </div>
+
         <footer className="p-2 w-full">
-          <div className="grid lg:grid-cols-2 gap-4 grid-cols-1">
-            <Link href="/api/oauth" data-umami-event="Log in (from home page)">
-              <div className="flex select-none items-center space-x-3 rounded-lg border py-4 px-5  text-neutral-950 dark:text-neutral-50 shadow-sm transition-colors border-neutral-200 bg-white dark:border-neutral-800 dark:bg-neutral-950 dark:hover:border-blue-600 hover:border-blue-600 hover:cursor-pointer">
-                <Image
-                  src="/discord.png"
-                  alt="Log in with Discord"
-                  className="rounded-sm"
-                  width={48}
-                  height={48}
-                />
+          <div className="grid lg:grid-cols-1 gap-4 grid-cols-1">
+            <Link href="https://discord.mythmc.ovh/">
+              <div
+                  className="flex select-none items-center space-x-3 rounded-lg border py-4 px-5  text-neutral-950 dark:text-neutral-50 shadow-sm transition-colors border-neutral-200 bg-white dark:border-neutral-800 dark:bg-neutral-950 dark:hover:border-blue-600 hover:border-blue-600 hover:cursor-pointer">
+
+                <div>
+                  <Image
+                      src="/discord.png"
+                      alt="Logotipo de Discord"
+                      className="rounded-sm dark:hidden"
+                      width={48}
+                      height={48}
+                  />
+                  <Image
+                      src="/dark/discord.png"
+                      alt="Logotipo de Discord"
+                      className="rounded-sm hidden dark:block"
+                      width={48}
+                      height={48}
+                  />
+                </div>
+
                 <div className="min-w-0 flex-1">
-                  <p className="font-medium truncate">Log in with Discord</p>
+                  <p className="font-medium truncate">Visítanos en Discord</p>
                   <p className="truncate text-sm text-neutral-500 dark:text-neutral-400">
-                    Link your Discord account to save your data across devices.
+                    Únete a nuestro Discord si necesitas ayuda.
                   </p>
                 </div>
               </div>
             </Link>
 
-            <div
-              className="flex select-none items-center space-x-3 rounded-lg border py-4 px-5  text-neutral-950 dark:text-neutral-50 shadow-sm transition-colors border-neutral-200 bg-white dark:border-neutral-800 dark:bg-neutral-950 dark:hover:border-blue-600 hover:border-blue-600 hover:cursor-pointer"
-              onClick={() => {
-                inputRef.current?.click();
-              }}
-            >
-              <Image
-                src="/upload.png"
-                alt="Upload a save file"
-                className="rounded-sm"
-                width={48}
-                height={48}
-              />
-              <div className="min-w-0 flex-1">
-                <p className="font-medium truncate">Upload a save file</p>
-                <p className="truncate text-sm text-neutral-500 dark:text-neutral-400">
-                  Upload your save file to track your progress towards
-                  perfection.
-                </p>
-              </div>
-              <input
-                type="file"
-                ref={inputRef}
-                className="hidden"
-                onChange={(e: ChangeEvent<HTMLInputElement>) => handleChange(e)}
-              />
-            </div>
-            <Link
-              href="/editor/create"
-              data-umami-event="Create farmhand (from home page)"
-            >
-              <div className="flex select-none items-center space-x-3 rounded-lg border py-4 px-5  text-neutral-950 dark:text-neutral-50 shadow-sm transition-colors border-neutral-200 bg-white dark:border-neutral-800 dark:bg-neutral-950 dark:hover:border-blue-600 hover:border-blue-600 hover:cursor-pointer">
-                <Image
-                  src="/create.png"
-                  alt="Create a farmhand"
-                  className="rounded-sm"
-                  width={48}
-                  height={48}
-                />
+            <Link href="https://docs.mythmc.ovh/">
+              <div
+                  className="flex select-none items-center space-x-3 rounded-lg border py-4 px-5  text-neutral-950 dark:text-neutral-50 shadow-sm transition-colors border-neutral-200 bg-white dark:border-neutral-800 dark:bg-neutral-950 dark:hover:border-blue-600 hover:border-blue-600 hover:cursor-pointer">
+
+                <div>
+                  <Image
+                      src="/gitbook.png"
+                      alt="Logotipo de GitBook"
+                      className="rounded-sm dark:hidden"
+                      width={48}
+                      height={48}
+                  />
+                  <Image
+                      src="/dark/gitbook.png"
+                      alt="Logotipo de GitBook"
+                      className="rounded-sm hidden dark:block"
+                      width={48}
+                      height={48}
+                  />
+                </div>
+
                 <div className="min-w-0 flex-1">
-                  <p className="font-medium truncate">Create a farmhand</p>
+                  <p className="font-medium truncate">Consulta nuestra guía</p>
                   <p className="truncate text-sm text-neutral-500 dark:text-neutral-400">
-                    Create a farmhand to track your progress towards perfection.
+                    Nuestra guía está escrita tanto para novatos como para jugadores avanzados.
                   </p>
                 </div>
               </div>
             </Link>
 
-            <Link href="/github" data-umami-event="GitHub (from home page)">
-              <div className="flex select-none items-center space-x-3 rounded-lg border py-4 px-5  text-neutral-950 dark:text-neutral-50 shadow-sm transition-colors border-neutral-200 bg-white dark:border-neutral-800 dark:bg-neutral-950 dark:hover:border-blue-600 hover:border-blue-600 hover:cursor-pointer">
-                <Image
-                  src="/github.png"
-                  alt="Look at GitHub"
-                  className="rounded-sm"
-                  width={48}
-                  height={48}
-                />
+            <Link href="https://github.com/myth-MC">
+              <div
+                  className="flex select-none items-center space-x-3 rounded-lg border py-4 px-5  text-neutral-950 dark:text-neutral-50 shadow-sm transition-colors border-neutral-200 bg-white dark:border-neutral-800 dark:bg-neutral-950 dark:hover:border-blue-600 hover:border-blue-600 hover:cursor-pointer">
+
+                <div>
+                  <Image
+                      src="/github.png"
+                      alt="Logotipo de GitHub"
+                      className="rounded-sm dark:hidden"
+                      width={48}
+                      height={48}
+                  />
+                  <Image
+                      src="/dark/github.png"
+                      alt="Logotipo de GitHub"
+                      className="rounded-sm hidden dark:block"
+                      width={48}
+                      height={48}
+                  />
+                </div>
+
                 <div className="min-w-0 flex-1">
-                  <p className="font-medium truncate">View on GitHub</p>
+                  <p className="font-medium truncate">Ver en GitHub</p>
                   <p className="truncate text-sm text-neutral-500 dark:text-neutral-400">
-                    View the source code for this website on GitHub.
+                    Visita nuestra organización en GitHub.
                   </p>
                 </div>
               </div>
             </Link>
           </div>
-          {/* <p className="text-gray-400 text-xs text-center mt-4">
-            ChatGPT can make mistakes. Consider checking important information.
-          </p> */}
         </footer>
       </main>
     </>

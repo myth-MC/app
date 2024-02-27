@@ -25,7 +25,7 @@ export const InfoCard = ({
           width={36}
           height={36}
           className="rounded-sm"
-          quality={25}
+          quality={100}
         />
       )}
       <div className="min-w-0 flex-1">

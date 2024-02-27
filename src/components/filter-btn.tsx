@@ -1,7 +1,5 @@
 import { Dispatch, SetStateAction, useContext, useState } from "react";
 
-import { PlayersContext } from "@/contexts/players-context";
-
 import { cn } from "@/lib/utils";
 
 import {
@@ -53,7 +51,7 @@ export const FilterButton = ({
   _filter,
   setFilter,
 }: ButtonProps) => {
-  const { activePlayer } = useContext(PlayersContext);
+  //const { activePlayer } = useContext(PlayersContext);
 
   const handleClick = () => {
     setFilter((prev) => {
@@ -71,7 +69,7 @@ export const FilterButton = ({
         _filter === target ? "bg-neutral-100 dark:bg-neutral-800" : ""
       )}
       onClick={() => handleClick()}
-      disabled={!activePlayer}
+      //disabled={!activePlayer}
     >
       <div
         className={cn("h-4 w-4 rounded-full border", bubbleColors[target])}
@@ -89,7 +87,7 @@ export const FilterSearch = ({
   icon,
   setFilter,
 }: SearchProps) => {
-  const { activePlayer } = useContext(PlayersContext);
+  //const { activePlayer } = useContext(PlayersContext);
 
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("");

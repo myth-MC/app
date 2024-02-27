@@ -6,21 +6,20 @@ import { Button } from "@/components/ui/button";
 
 import {
   IconAward,
-  IconBook,
   IconBrandDiscord,
   IconBrandGithub,
-  IconBuildingWarehouse,
-  IconEgg,
-  IconFishHook,
-  IconGardenCart,
-  IconHammer,
+  IconBuildingBank,
+  IconSwords,
+  IconTower,
+  IconWall,
+  IconDeviceGamepad,
   IconHeart,
   IconHome2,
   IconId,
-  IconNote,
   IconProgress,
   IconShirt,
   IconSettings,
+  IconBackpack,
 } from "@tabler/icons-react";
 
 import {
@@ -30,36 +29,31 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { DiscordLogoIcon, GitHubLogoIcon } from "@radix-ui/react-icons";
+import {useRouter} from "next/router";
 
 interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {}
 
-export const miscNavigation = [
-  // { name: "Bundles", href: "/bundles", icon: IconBox },
-  { name: "Walnuts", href: "/island/walnuts", icon: IconProgress },
-  { name: "Secret Notes", href: "/notes", icon: IconNote },
-  { name: "Journal Scraps", href: "/island/scraps", icon: IconBook },
-  { name: "Account Settings", href: "/account", icon: IconSettings },
-];
-
 export const playerNavigation = [
-  { name: "Home", href: "/", icon: IconHome2 },
-  { name: "Farmer", href: "/farmer", icon: IconId },
-  { name: "Perfection", href: "/perfection", icon: IconAward },
-  { name: "Relationships", href: "/relationships", icon: IconHeart },
+  { name: "Inicio", href: "/", icon: IconHome2 },
+  { name: "Información", href: "/player", icon: IconId },
 ];
 
-export const collectionsNavigation = [
-  { name: "Cooking", href: "/cooking", icon: IconEgg },
-  { name: "Crafting", href: "/crafting", icon: IconHammer },
-  { name: "Fishing", href: "/fishing", icon: IconFishHook },
-  { name: "Shipping", href: "/shipping", icon: IconGardenCart },
-  { name: "Museum & Artifacts", href: "/museum", icon: IconBuildingWarehouse },
+export const itemsNavigation = [
+  { name: "Metrópolis (SMP)", href: "/wip", icon: IconBuildingBank },
+  { name: "Brawl", href: "/wip", icon: IconSwords },
+  { name: "The Towers", href: "/wip", icon: IconTower },
+  { name: "MiniWalls", href: "/wip", icon: IconWall },
+  { name: "Arcade", href: "/wip", icon: IconDeviceGamepad },
+];
+
+export const miscNavigation = [
+  { name: "Objetos", href: "/items", icon: IconBackpack },
+  { name: "Ajustes", href: "/settings", icon: IconSettings },
 ];
 
 export const linksNavigation = [
   { name: "Discord", href: "/discord", icon: DiscordLogoIcon },
   { name: "GitHub", href: "/github", icon: GitHubLogoIcon },
-  { name: "stardew.me", href: "https://stardew.me/?utm_campaign=StardewApp&utm_source=Beta&utm_medium=Button", icon: IconShirt },
 ];
 
 export const SidebarCategory = ({ children }: { children: string }) => (
@@ -70,10 +64,11 @@ export const SidebarCategory = ({ children }: { children: string }) => (
 
 export function Sidebar({ className }: SidebarProps) {
   const pathname = usePathname();
+  const router = useRouter();
 
   return (
     <div className={className}>
-      <div className="grid grid-cols-3 pt-4 gap-2 w-72 px-3">
+      <div className="grid grid-cols-2 pt-4 gap-2 w-72 px-3">
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
@@ -82,13 +77,13 @@ export function Sidebar({ className }: SidebarProps) {
                 className="w-full dark:hover:bg-[#5865F2] hover:bg-[#5865F2] hover:text-neutral-50"
                 asChild
               >
-                <a href={"/discord"} target="_blank" rel="noreferrer">
+                <a href={"https://discord.mythmc.ovh/"} target="_blank" rel="noreferrer">
                   <IconBrandDiscord size={20} />
                 </a>
               </Button>
             </TooltipTrigger>
             <TooltipContent side="bottom">
-              <p>Join our Discord!</p>
+              <p>¡Únete a nuestro Discord!</p>
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
@@ -101,47 +96,26 @@ export function Sidebar({ className }: SidebarProps) {
                 className="w-full hover:bg-neutral-800 hover:text-neutral-50"
                 asChild
               >
-                <a href={"/github"} target="_blank" rel="noreferrer">
+                <a href={"https://github.com/myth-MC"} target="_blank" rel="noreferrer">
                   <IconBrandGithub size={20} />
                 </a>
               </Button>
             </TooltipTrigger>
             <TooltipContent side="bottom">
-              <p>stardew.app&apos;s source!</p>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
-
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button
-                variant="outline"
-                className="w-full hover:bg-[#FFD282] dark:hover:bg-[#FFD282] hover:text-neutral-50"
-                asChild
-              >
-                <a
-                  href={
-                    "https://stardew.me/?utm_campaign=StardewApp&utm_source=Beta&utm_medium=Button"
-                  }
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <IconShirt size={20} />
-                </a>
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent side="bottom">
-              <p>Generate a Stardew avatar!</p>
+              <p>Código fuente de la web</p>
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
       </div>
       <nav className="px-3 pb-2">
-        <SidebarCategory>Player</SidebarCategory>
+        <SidebarCategory>Jugador</SidebarCategory>
         <div className="space-y-1">
           {playerNavigation.map((item) => (
             <Button
+              onClick={() => router.push({
+                pathname: item.href,
+                query: router.query
+              })}
               key={item.href}
               variant={pathname === item.href ? "secondary" : "ghost"}
               className={cn(
@@ -152,17 +126,21 @@ export function Sidebar({ className }: SidebarProps) {
               )}
               asChild
             >
-              <Link href={item.href}>
+              <span>
                 <item.icon className="w-4 h-4 mr-2" aria-hidden="true" />
                 {item.name}
-              </Link>
+              </span>
             </Button>
           ))}
         </div>
-        <SidebarCategory>Collections</SidebarCategory>
+        <SidebarCategory>Estadísticas</SidebarCategory>
         <div className="space-y-1">
-          {collectionsNavigation.map((item) => (
+          {itemsNavigation.map((item) => (
             <Button
+              onClick={() => router.push({
+                pathname: item.href,
+                query: router.query
+              })}
               key={item.href}
               variant={pathname === item.href ? "secondary" : "ghost"}
               className={cn(
@@ -173,18 +151,22 @@ export function Sidebar({ className }: SidebarProps) {
               )}
               asChild
             >
-              <Link href={item.href}>
+              <p>
                 <item.icon className="w-4 h-4 mr-2" aria-hidden="true" />
                 {item.name}
-              </Link>
+              </p>
             </Button>
           ))}
         </div>
 
-        <SidebarCategory>Misc</SidebarCategory>
+        <SidebarCategory>Otros</SidebarCategory>
         <div className="space-y-1">
           {miscNavigation.map((item) => (
             <Button
+              onClick={() => router.push({
+                pathname: item.href,
+                query: router.query
+              })}
               key={item.href}
               variant={pathname === item.href ? "secondary" : "ghost"}
               className={cn(
@@ -195,10 +177,10 @@ export function Sidebar({ className }: SidebarProps) {
               )}
               asChild
             >
-              <Link href={item.href}>
+              <p>
                 <item.icon className="w-4 h-4 mr-2" aria-hidden="true" />
                 {item.name}
-              </Link>
+              </p>
             </Button>
           ))}
         </div>

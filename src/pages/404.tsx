@@ -9,9 +9,6 @@ export default function NotFoundPage() {
       >
         <div className="flex justify-center flex-col ">
           <Image src="/404.png" alt="404" width={960} height={540} />
-          {/* <h1 className="text-2xl font-bold text-neutral-900 dark:text-neutral-100 text-center">
-          This page is under construction, please check back later!
-        </h1> */}
         </div>
       </main>
     </Link>

@@ -1,49 +1,43 @@
-import { Head, Html, Main, NextScript } from "next/document";
+import {Head, Html, Main, NextScript} from "next/document";
 
 export default function Document() {
-  return (
-    <Html lang="en">
-      <Head>
-        <script
-          async
-          src="https://analytics.eu.umami.is/script.js"
-          data-website-id="148c90ab-aacc-40b4-b1c7-b4eee4862a7c"
-        ></script>
+    return (
+        <Html lang="es">
+            <Head>
+                <meta charSet="utf-8"/>
+                <meta
+                    name="description"
+                    content="mythMC es un servidor de Minecraft hispanohablante con una gran comunidad. Puedes usar app.mythmc.ovh para consultar tus estadísticas personales y otros recursos útiles en cualquier momento. ¿A qué esperas?"
+                />
+                <meta property="og:type" content="website"/>
+                <meta property="og:url" content="https://app.mythmc.ovh/"/>
+                <meta property="og:title" content="mythMC | Estadísticas"/>
+                <meta
+                    property="og:description"
+                    content="Consulta tus estadísticas de mythMC."
+                />
 
-        <meta charSet="utf-8" />
-        <meta
-          name="description"
-          content="Stardew.app is a web application that allows you to track your Stardew Valley progress by uploading your save file. Gain valuable insights into your progress, monitor achievements, and optimize your gameplay. Take control of your farm, relationships, and community events, and uncover hidden secrets. Maximize your efficiency and become the ultimate Stardew Valley perfectionist. Start tracking your save files today!"
-        />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://stardew.app" />
-        <meta property="og:title" content="Stardew.app" />
-        <meta
-          property="og:description"
-          content="Keep track of your Stardew Valley progression."
-        />
+                <meta property="og:thumbnail" content="/favicon.png"/>
+                <meta property="og:image:width" content="64"/>
+                <meta property="og:image:height" content="64"/>
 
-        <meta property="og:thumbnail" content="/favicon.png" />
-        <meta property="og:image:width" content="64" />
-        <meta property="og:image:height" content="64" />
+                <meta name="twitter:card" content="summary"/>
+                <meta name="twitter:url" content="https://app.mythmc.ovh"/>
+                <meta name="twitter:title" content="mythMC | Estadísticas"/>
+                <meta
+                    name="twitter:description"
+                    content="Consulta tus estadísticas de mythMC."
+                />
+                <meta name="twitter:image" content="/favicon.png"/>
+                <meta name="twitter:image:width" content="512"/>
+                <meta name="twitter:image:height" content="512"/>
 
-        <meta name="twitter:card" content="summary" />
-        <meta name="twitter:url" content="https://stardew.app" />
-        <meta name="twitter:title" content="Stardew.app" />
-        <meta
-          name="twitter:description"
-          content="Keep track of your Stardew Valley progression."
-        />
-        <meta name="twitter:image" content="/favicon.png" />
-        <meta name="twitter:image:width" content="512" />
-        <meta name="twitter:image:height" content="512" />
-
-        <link rel="icon" href="/favicon.png" />
-      </Head>
-      <body className="dark:bg-neutral-950 overscroll-y-none">
-        <Main />
-        <NextScript />
-      </body>
-    </Html>
-  );
+                <link rel="icon" href="/favicon.png"/>
+            </Head>
+            <body className="dark:bg-neutral-950 overscroll-y-none">
+            <Main/>
+            <NextScript/>
+            </body>
+        </Html>
+    );
 }

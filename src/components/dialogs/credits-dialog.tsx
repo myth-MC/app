@@ -19,49 +19,30 @@ export const CreditsDialog = ({ open, setOpen }: Props) => {
       <DialogContent>
         <div className="flex justify-center">
           <Image
-            src="https://stardewvalleywiki.com/mediawiki/images/c/c8/Emojis043.png"
-            alt={"Heart icon"}
+            src="/heart.png"
+            alt={"Corazón de Minecraft"}
             width={48}
             height={48}
           />
         </div>
         <DialogHeader>
-          <DialogTitle className="text-center">Credits</DialogTitle>
+          <DialogTitle className="text-center">Créditos</DialogTitle>
         </DialogHeader>
         <DialogDescription>
-          stardew.app was developed, designed, and created by{" "}
-          <a href="https://jack.bio" className="underline">
-            Jack LaFond
-          </a>{" "}
-          and{" "}
-          <a href="https://solorio.dev" className="underline">
-            Clemente Solorio
-          </a>
-          .
+          app.mythmc.ovh está desarrollado a partir de stardew.app,
+          una web desarrollada, diseñada y creada por Jack LaFond
+          y Clemente Solorio.
         </DialogDescription>
         <DialogDescription>
-          However, it wouldn&apos;t be possible without the help of the{" "}
-          <a href="https://solorio.dev" className="underline">
-            Leah Lundqvist
-          </a>{" "}
-          (backend),{" "}
-          <a href="https://solorio.dev" className="underline">
-            Brandon Saldan
-          </a>{" "}
-          (frontend), and our countless contributors on{" "}
-          <a href="https://stardew.app/github" className="underline">
-            GitHub
-          </a>
-          .
+          La adaptación está hecha por U8092 para mythMC.
         </DialogDescription>
         <DialogHeader>
-          <DialogTitle className="text-sm">Notable Mentions</DialogTitle>
+          <DialogTitle className="text-sm">Código fuente</DialogTitle>
         </DialogHeader>
         <DialogDescription>
-          <li>Stardew Valley Wiki</li>
-          <li>Stardew Valley&apos;s Discord #seasoned-farmers</li>
-          <li>ConcernedApe</li>
-          <li>You, the user - thank you!</li>
+          <li><a href="https://github.com/myth-MC/" target="_blank">Proyecto en GitHub</a></li>
+          <li><a href="https://github.com/myth-MC" target="_blank">Nuestra organización en GitHub</a></li>
+          <li><a href="https://github.com/U8092" target="_blank">U8092 en GitHub</a></li>
         </DialogDescription>
       </DialogContent>
     </Dialog>

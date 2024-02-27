@@ -1,35 +1,32 @@
 import Image from "next/image";
 import Link from "next/link";
-import useSWR from "swr";
 
 import packageJson from "../../package.json";
 const { version } = packageJson;
 
-import { parseSaveFile } from "@/lib/file";
-import { deleteCookie } from "cookies-next";
-import { ChangeEvent, useContext, useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 
-import { PlayersContext } from "@/contexts/players-context";
-
-import { CreditsDialog } from "@/components/dialogs/credits-dialog";
-import { DeletionDialog } from "@/components/dialogs/deletion-dialog";
-import { PresetSelector } from "@/components/preset-selector";
-import { MobileNav } from "@/components/sheets/mobile-nav";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+
+import { CreditsDialog } from "@/components/dialogs/credits-dialog";
+import { MobileNav } from "@/components/sheets/mobile-nav";
+import { Button } from "@/components/ui/button";
+
 import { Separator } from "@/components/ui/separator";
 
-import { useMixpanel } from "@/contexts/mixpanel-context";
-import { HamburgerMenuIcon } from "@radix-ui/react-icons";
-import { toast } from "sonner";
+import {HamburgerMenuIcon} from "@radix-ui/react-icons";
+
+import {useRouter} from "next/router";
+import {usePlayer} from "@/contexts/mythplayer-context";
+import {toast} from "sonner";
+import {PlayerNameInputCard} from "@/components/cards/player-name-input-card";
+import {IconSearch} from "@tabler/icons-react";
+
 export interface User {
   id: string;
   discord_id: string;
@@ -39,79 +36,15 @@ export interface User {
 }
 
 export function Topbar() {
-  const api = useSWR<User>(
-    "/api",
-    // @ts-expect-error
-    (...args) => fetch(...args).then((res) => res.json()),
-    { refreshInterval: 0, revalidateOnFocus: false }
-  );
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   const [mobileOpen, setMobileOpen] = useState(false);
   const [creditsOpen, setCreditsOpen] = useState(false);
-  const [deletionOpen, setDeletionOpen] = useState(false);
 
-  const { activePlayer, uploadPlayers } = useContext(PlayersContext);
-  const mixpanel = useMixpanel();
+  const router = useRouter();
+  const {username} = router?.query
 
-  useEffect(() => {
-    if (!api.data?.discord_id) return; // don't try to identify if they're not logged in
-    mixpanel?.identify(api.data?.discord_id);
-    mixpanel?.people?.set({
-      discord_id: api.data?.discord_id,
-      $name: api.data?.discord_name,
-      $avatar: `https://cdn.discordapp.com/avatars/${api.data?.discord_id}/${api.data?.discord_avatar}.png`,
-    });
-  }, []);
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
-
-    const file = e.target!.files![0];
-
-    if (typeof file === "undefined" || !file) return;
-
-    if (file.type !== "") {
-      toast.error("Invalid file type", {
-        description: "Please upload a Stardew Valley save file.",
-      });
-      return;
-    }
-
-    const reader = new FileReader();
-
-    let uploadPromise;
-
-    reader.onloadstart = () => {
-      uploadPromise = new Promise((resolve, reject) => {
-        reader.onload = async function (event) {
-          try {
-            const players = parseSaveFile(event.target?.result as string);
-            await uploadPlayers(players);
-            resolve("Your save file was successfully uploaded!");
-            mixpanel?.track("Upload Save File", {
-              Players: players.length,
-            });
-          } catch (err) {
-            reject(err instanceof Error ? err.message : "Unknown error.");
-          }
-        };
-      });
-
-      // Start the loading toast
-      toast.promise(uploadPromise, {
-        loading: "Uploading your save file...",
-        success: (data) => `${data}`,
-        error: (err) => `There was an error parsing your save file:\n${err}`,
-      });
-
-      // Reset the input
-      e.target.value = "";
-      uploadPromise = null;
-    };
-
-    reader.readAsText(file);
-  };
+  const { data } = usePlayer(username);
 
   return (
     <>
@@ -122,144 +55,83 @@ export function Topbar() {
             height={36}
             className="h-9 w-auto"
             src="/favicon.png"
-            alt="stardew.app logo"
+            alt="app.mythmc.ovh logo"
           />
-          <h1 className="pl-3 font-medium">stardew.app</h1>
+          <h1 className="pl-3 font-medium">app.mythmc.ovh</h1>
+          <p className="pl-2 font-light" onClick={() => setCreditsOpen(true)}>{version}</p>
         </div>
-        {/* Mobile Menu */}
+
+        {/* Móviles */}
         <div className="md:hidden flex justify-end">
           <Button variant="outline" onClick={() => setMobileOpen(true)}>
             <HamburgerMenuIcon className="h-4 w-4" />
           </Button>
         </div>
-        {/* Desktop Version */}
+
+        {/* Escritorio */}
         <div className="hidden ml-auto w-full space-x-2 sm:justify-end md:flex">
-          <PresetSelector />
-          {activePlayer && (
-            <Button variant="outline" data-umami-event="Edit player">
-              <Link href={`/editor/edit`}>Edit Player</Link>
-            </Button>
-          )}
           <Button
             variant="secondary"
             onClick={() => {
               inputRef.current?.click();
             }}
-            data-umami-event="Upload save"
-            className="hover:bg-green-500 hover:text-neutral-50 dark:hover:bg-green-500 dark:hover:text-neutral-50"
-          >
-            Upload Save
-            <input
-              type="file"
-              ref={inputRef}
-              className="hidden"
-              onChange={(e: ChangeEvent<HTMLInputElement>) => handleChange(e)}
-            />
+            className="hover:bg-green-500 hover:text-neutral-50 dark:hover:bg-green-500 dark:hover:text-neutral-50">
+            <Link href="https://docs.mythmc.ovh">Guía y documentación</Link>
           </Button>
-          {/* Not Logged In */}
-          {!api.data?.discord_id && (
-            <Button
-              className="dark:hover:bg-[#5865F2] hover:bg-[#5865F2] dark:hover:text-white"
-              data-umami-event="Log in"
-            >
-              <Link href="/api/oauth">Log In With Discord</Link>
-            </Button>
+
+          {!data && (
+              <div className="flex flex-shrink-0 items-center">
+                <PlayerNameInputCard
+                    key="buscar"
+                    title="Buscar"
+                    Icon={IconSearch}
+                    description="Introduce el nombre del usuario que quieres buscar."
+                    showTitle={false}
+                />
+              </div>
           )}
-          {/* Logged In */}
-          {api.data?.discord_id && (
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button className="space-x-2 px-2.5 max-w-[200px]">
-                  <Avatar className="h-6 w-6">
-                    {api.data.discord_avatar ? (
-                      <AvatarImage
-                        src={`https://cdn.discordapp.com/avatars/${api.data.discord_id}/${api.data.discord_avatar}.png`}
-                      />
-                    ) : (
-                      <AvatarImage
-                        src={`https://cdn.discordapp.com/embed/avatars/0.png`}
-                      />
-                    )}
-                    <AvatarFallback delayMs={600}>
-                      {api.data?.discord_name.slice(0, 1).toUpperCase()}
-                    </AvatarFallback>
-                  </Avatar>
 
-                  <span className="truncate">{api.data.discord_name}</span>
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-[200px] mr-[26px]">
-                <DropdownMenuLabel className="text-xs text-gray-400 font-normal">
-                  stardew.app {version}
-                </DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem
-                  data-umami-event="Open credits"
-                  onClick={() => {
-                    setCreditsOpen(true);
-                  }}
-                >
-                  Credits
-                </DropdownMenuItem>
+          {data && (
+              <div className="flex flex-shrink-0 items-center">
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button
+                        variant="secondary"
+                        className="hover:bg-blue-500 hover:text-neutral-50 dark:hover:bg-blue-500 dark:hover:text-neutral-50"
+                  >
+                    <Image
+                        width={36}
+                        height={36}
+                        className="h-6 w-auto"
+                        src={"https://minotar.net/helm/" + data?.username + ".png"}
+                        alt={"Avatar de " + data?.username}
+                    />
+                    <p className="pl-1 font-medium">{data?.username}</p>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-48" align="end">
+                  <DropdownMenuItem
+                      onClick={() => {
+                        router.push(router.basePath)
 
-                <DropdownMenuItem
-                  className="focus:text-red-400 dark:focus:text-red-400"
-                  data-umami-event="Delete save data"
-                  onClick={() => {
-                    setDeletionOpen(true);
-                  }}
-                >
-                  Delete Save Data
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem
-                  data-umami-event="Log out"
-                  onClick={() => {
-                    deleteCookie("token", {
-                      maxAge: 0,
-                      domain: parseInt(process.env.NEXT_PUBLIC_DEVELOPMENT!)
-                        ? "localhost"
-                        : "stardew.app",
-                    });
-                    deleteCookie("uid", {
-                      maxAge: 0,
-                      domain: parseInt(process.env.NEXT_PUBLIC_DEVELOPMENT!)
-                        ? "localhost"
-                        : "stardew.app",
-                    });
-                    deleteCookie("oauth_state", {
-                      maxAge: 0,
-                      domain: parseInt(process.env.NEXT_PUBLIC_DEVELOPMENT!)
-                        ? "localhost"
-                        : "stardew.app",
-                    });
-                    deleteCookie("discord_user", {
-                      maxAge: 0,
-                      domain: parseInt(process.env.NEXT_PUBLIC_DEVELOPMENT!)
-                        ? "localhost"
-                        : "stardew.app",
-                    });
-
-                    mixpanel?.reset();
-                    return (window.location.href = "/");
-                  }}
-                >
-                  Log out
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+                        toast.info("Has cerrado la sesión.")
+                      }}
+                  >
+                    <span className="text-red-400">Abandonar sesión</span>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
           )}
         </div>
       </div>
-      <Separator />
+      <Separator/>
       <MobileNav
         open={mobileOpen}
         setIsOpen={setMobileOpen}
-        setDeletionOpen={setDeletionOpen}
         inputRef={inputRef}
       />
       <CreditsDialog open={creditsOpen} setOpen={setCreditsOpen} />
-      <DeletionDialog open={deletionOpen} setOpen={setDeletionOpen} />
     </>
   );
 }

@@ -1,10 +1,10 @@
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import { ChevronRightIcon } from "@radix-ui/react-icons";
-import Image from "next/image";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as v from "valibot";
 import { Button } from "../ui/button";
+
 import {
   Dialog,
   DialogContent,
@@ -13,6 +13,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "../ui/dialog";
+
 import {
   Form,
   FormControl,
@@ -20,92 +21,52 @@ import {
   FormItem,
   FormMessage,
 } from "../ui/form";
+
 import { Input } from "../ui/input";
+import {useRouter} from "next/router";
+import {toast} from "sonner";
+
 interface Props {
   title: string;
   description?: string;
-  iconURL: string;
-  completed?: boolean;
-  currentValue?: number;
-  maxValue: number;
+  Icon: any;
+  showTitle: boolean;
 }
 
-export const InputCard = ({
+export const PlayerNameInputCard = ({
   title,
-  iconURL,
+  Icon,
   description,
-  completed,
-  currentValue,
-  maxValue,
+  showTitle
 }: Props) => {
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState("");
+
+  const router = useRouter();
 
   const inputSchema = v.object({
-    input: v.number([v.minValue(0)]),
+    input: v.string([v.maxLength(16, 'El nombre es demasiado largo')]),
   });
 
   const form = useForm<v.Input<typeof inputSchema>>({
     resolver: valibotResolver(inputSchema),
   });
 
-  async function handleSave() {
-    //if (!activePlayer) return;
-
-    // don't make any requests if the value hasn't changed
-    if (value === currentValue || value < 0) {
-      setOpen(false);
-      return;
-    }
-
-    const patch = {
-      monsters: {
-        monstersKilled: {
-          [title]: value === 0 ? 0 : value,
-        },
-      },
-    };
-
-    //await patchPlayer(patch);
-    setOpen(false);
-  }
-
   const [open, setOpen] = useState(false);
-
-  let checkedClass = completed
-    ? "border-green-900 bg-green-500/20 hover:bg-green-500/30 dark:bg-green-500/10 hover:dark:bg-green-500/20"
-    : "border-neutral-200 bg-white dark:border-neutral-800 dark:bg-neutral-950 hover:bg-neutral-100 dark:hover:bg-neutral-800";
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <div className="flex items-center space-x-3 truncate rounded-lg border-none border-neutral-200 bg-white py-4 px-5 dark:border-neutral-800 dark:bg-neutral-950 text-neutral-950 dark:text-neutral-50 shadow-none">
+        <div className="flex items-center space-x-3 truncate rounded-lg border-none border-neutral-200 bg-white px-3 py-1 dark:border-neutral-800 dark:bg-neutral-950 text-neutral-950 dark:text-neutral-50 shadow-none">
           <div className="flex space-x-3 items-center">
-            <Image
-              src={iconURL}
-              alt={title}
-              width={36}
-              height={36}
-              className="rounded-sm"
-              quality={25}
-            />
-            <p className="truncate text-sm font-semibold">{title}</p>
-            <p className="truncate text-sm text-neutral-500 dark:text-neutral-400">
-              {currentValue ? currentValue : 0}/{maxValue}
-            </p>
+            {Icon && <Icon className="h-6 w-6 dark:text-white" />}
+            {showTitle && <p className="truncate text-sm font-semibold">{title}</p>}
           </div>
-          <ChevronRightIcon className="h-5 w-5" />
+          {showTitle && <ChevronRightIcon className="h-5 w-5" />}
         </div>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <Image
-            src={iconURL}
-            alt={title}
-            className="rounded-sm mx-auto"
-            width={36}
-            height={36}
-            quality={25}
-          />
+          {Icon && <Icon className="h-6 w-6 dark:text-white" />}
           <DialogTitle className="text-center">{title}</DialogTitle>
           <DialogDescription className="text-center">
             {description}
@@ -126,24 +87,27 @@ export const InputCard = ({
                       <div className="flex w-2/3 items-center space-x-2">
                         <FormControl>
                           <Input
-                            type="number"
+                            type="string"
                             min={0}
-                            defaultValue={currentValue ?? 0}
-                            onChange={(e) => setValue(parseInt(e.target.value))}
-                            //disabled={!activePlayer}
+                            onChange={(e) => setValue(e.target.value)}
                           />
                         </FormControl>
-                        <p>/{maxValue}</p>
                       </div>
 
                       <Button
-                        //disabled={!activePlayer}
                         type="submit"
                         onClick={() => {
-                          handleSave();
+                          router.push({
+                            pathname: router.pathname,
+                            query: { username: value }
+                          })
+
+                          setOpen(false);
+
+                          toast.info("Estás viendo las estadísticas de " + value)
                         }}
                       >
-                        Submit
+                        Buscar
                       </Button>
                     </div>
                     <FormMessage />

@@ -1,0 +1,22 @@
+{
+  "Objeto de Prueba": {
+    "fullName": "Objeto de Prueba",
+    "description": "Este es un objeto de prueba.",
+    "iconURL": "/items/unknown.png",
+    "gamemodes": ["Metrópolis", "Brawl"],
+    "rarity": "Raro",
+    "since": "27 de febrero de 2024",
+    "until": "27 de febrero de 2025",
+    "event": true
+  },
+  "Objeto": {
+    "fullName": "Objeto",
+    "description": "Este es otro objeto de prueba.",
+    "iconURL": "/items/unknown.png",
+    "gamemodes": ["The Towers", "MiniWalls", "Arcade"],
+    "rarity": "Común",
+    "since": "2024",
+    "until": "∞",
+    "event": false
+  }
+}
