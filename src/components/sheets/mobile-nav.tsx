@@ -58,13 +58,18 @@ export const MobileNav = ({
 
                   {!data && (
                       <div className="w-full justify-start">
-                        <PlayerNameInputCard
-                            key="buscar"
-                            title="Buscar"
-                            Icon={IconSearch}
-                            description="Introduce el nombre del usuario que quieres buscar."
-                            showTitle={true}
-                        />
+                        <Button
+                            className={cn(
+                                "w-full justify-start",
+                                "text-neutral-600 dark:text-neutral-400"
+                            )}
+                            onClick={() => {
+                              router.push("/search")
+                              setIsOpen(false);
+                            }}
+                            variant="ghost">
+                             <IconSearch className="w-4 h-4 mr-2" aria-hidden={true}/>Buscar
+                        </Button>
                       </div>
                   )}
 

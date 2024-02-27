@@ -27,14 +27,6 @@ import {toast} from "sonner";
 import {PlayerNameInputCard} from "@/components/cards/player-name-input-card";
 import {IconSearch} from "@tabler/icons-react";
 
-export interface User {
-  id: string;
-  discord_id: string;
-  cookie_secret: string;
-  discord_avatar: string;
-  discord_name: string;
-}
-
 export function Topbar() {
   const inputRef = useRef<HTMLInputElement | null>(null);
 

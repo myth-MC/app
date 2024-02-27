@@ -6,7 +6,7 @@ export const BetaFeatureInfo = () => {
       <div className="flex items-center space-x-1">
         <IconExclamationCircle className="text-orange-700" />
         <p className="text-orange-700">
-          Esta característica está en desarrollo. Puede contener errores o estar incompleta.
+          Esta característica se encuentra en desarrollo. Puede contener errores o estar incompleta.
         </p>
       </div>
     </div>
