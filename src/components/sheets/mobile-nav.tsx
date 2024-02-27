@@ -51,9 +51,8 @@ export const MobileNav = ({
             <nav className="space-y-2">
               <h3 className="font-semibold">Navegación</h3>
               <Separator />
+
               {/* Player */}
-
-
               <section>
                 <div className="space-y-1">
 

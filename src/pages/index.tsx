@@ -102,7 +102,7 @@ export default function Home() {
               </div>
             </Link>
 
-            <Link href="https://github.com/myth-MC">
+            <Link href="https://github.com/myth-MC/app">
               <div
                   className="flex select-none items-center space-x-3 rounded-lg border py-4 px-5  text-neutral-950 dark:text-neutral-50 shadow-sm transition-colors border-neutral-200 bg-white dark:border-neutral-800 dark:bg-neutral-950 dark:hover:border-blue-600 hover:border-blue-600 hover:cursor-pointer">
 

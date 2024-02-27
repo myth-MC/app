@@ -40,7 +40,7 @@ function InlineInput({ label, value }: { label: string; value: string }) {
           className="absolute right-0 group hover:bg-inherit dark:hover:bg-inherit"
           onClick={() => {
             navigator.clipboard.writeText(value);
-            toast.info(`Has copiado tu ${label} al portapapeles.`);
+            toast.info(`Has copiado ${value} al portapapeles.`);
           }}
         >
           <ClipboardIcon className="w-5 h-5 group-hover:text-neutral-500 dark:group-hover:text-neutral-400" />
