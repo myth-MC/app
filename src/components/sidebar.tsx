@@ -1,11 +1,9 @@
 import { cn } from "@/lib/utils";
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 
 import {
-  IconAward,
   IconBrandDiscord,
   IconBrandGithub,
   IconBuildingBank,
@@ -13,11 +11,8 @@ import {
   IconTower,
   IconWall,
   IconDeviceGamepad,
-  IconHeart,
   IconHome2,
   IconId,
-  IconProgress,
-  IconShirt,
   IconSettings,
   IconBackpack,
 } from "@tabler/icons-react";
@@ -52,8 +47,8 @@ export const miscNavigation = [
 ];
 
 export const linksNavigation = [
-  { name: "Discord", href: "/discord", icon: DiscordLogoIcon },
-  { name: "GitHub", href: "/github", icon: GitHubLogoIcon },
+  { name: "Discord", href: "discord.mythmc.ovh", icon: DiscordLogoIcon },
+  { name: "GitHub", href: "https://github.com/myth-MC/app", icon: GitHubLogoIcon },
 ];
 
 export const SidebarCategory = ({ children }: { children: string }) => (
