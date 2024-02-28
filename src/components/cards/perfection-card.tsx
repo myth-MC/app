@@ -16,9 +16,12 @@ export const PerfectionCard = ({
   footer,
   ...rest
 }: Props) => {
+  // capar % a 100
+  if(percentage > 100) percentage = 100;
+
   const checkedClass =
-    percentage === 100
-      ? "border-green-900 bg-green-500/20 dark:bg-green-500/10 dark:border-green-900"
+    percentage >= 100
+      ? "border-green-300 bg-green-500/20 dark:bg-green-500/10 dark:border-green-300"
       : "";
   return (
     <Card {...rest} className={checkedClass}>

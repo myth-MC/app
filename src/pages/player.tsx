@@ -12,7 +12,7 @@ import {
   IconCurrencyDollar,
   IconUser,
   IconHome,
-  IconHomeSearch, IconHeartCheck, IconSword, IconSkull
+  IconHomeSearch, IconHeartCheck, IconSword, IconSkull, IconClock
 } from "@tabler/icons-react";
 
 import {useRouter} from "next/router";
@@ -31,6 +31,15 @@ export default function Player() {
   const {username} = router?.query
 
   const { data } = usePlayer(username);
+
+  // Player variables
+  const mytharites = data?.mytharites ?? "0";
+  const prestige = data?.prestige ?? "0";
+  const kills = data?.kills ?? "0";
+  const deaths = data?.deaths ?? "0";
+  const firstJoin = data?.firstJoin ?? "No hay información";
+  const lastJoin = data?.lastJoin ?? "No hay información";
+  const playTimeInHours = Math.floor((data?.playTime ?? "0") / 3600);
 
   useEffect(() => {
     if(data?.username) {
@@ -99,44 +108,51 @@ export default function Player() {
             <InfoCard
                 title="Mitaritas"
                 description={
-                    data?.mytharites ?? "No hay información"
+                    mytharites
                 }
                 Icon={IconCurrencyDollar}
             />
             <InfoCard
                 title="Se unió el"
                 description={
-                    data?.firstJoin ?? "No hay información"
+                    firstJoin
                 }
                 Icon={IconHome}
             />
             <InfoCard
                 title="Jugó por última vez el"
                 description={
-                    data?.lastJoin ?? "No hay información"
+                    lastJoin
                 }
                 Icon={IconHomeSearch}
             />
             <InfoCard
                 title="Prestigio"
                 description={
-                    data?.prestige ?? "No hay información"
+                    prestige
                 }
                 Icon={IconHeartCheck}
             />
             <InfoCard
                 title="Asesinatos"
                 description={
-                    data?.kills ?? "No hay información"
+                    kills
                 }
                 Icon={IconSword}
             />
             <InfoCard
                 title="Muertes"
                 description={
-                    data?.deaths ?? "No hay información"
+                    deaths
                 }
                 Icon={IconSkull}
+            />
+            <InfoCard
+                title="Horas de juego"
+                description={
+                    playTimeInHours.toString()
+                }
+                Icon={IconClock}
             />
           </div>
 
@@ -168,7 +184,7 @@ export default function Player() {
               </AccordionItem>
               <AccordionItem value="stats">
                 <AccordionTrigger className="ml-1 text-xl font-semibold text-gray-900 dark:text-white pt-0">
-                  Estadísticas globales
+                  Nivel de perfección
                 </AccordionTrigger>
                 <AccordionContent asChild>
                   <div className="grid grid-cols-1 xl:grid-cols-3 2xl:grid-cols-4 gap-4 grid-rows-4">
@@ -183,7 +199,7 @@ export default function Player() {
                         </CardHeader>
 
                         <PercentageIndicator
-                            percentage={Math.floor((9 + 9 + 17 + 36 + 56) / 5)}
+                            percentage={Math.floor((kills * 0.25 + playTimeInHours * 2 + 9 + 17 + 36 + 56) / 6)}
                             className="h-32 w-32 lg:h-48 lg:w-48"
                         />
                       </div>
@@ -193,37 +209,44 @@ export default function Player() {
 
                     <PerfectionCard
                         title="Asesinatos"
-                        description={"37/400"}
-                        percentage={Math.floor(37 / 400 * 100)}
+                        description={kills + "/400"}
+                        percentage={Math.floor(kills * 0.25)}
+                        footer=""
+                    />
+
+                    <PerfectionCard
+                        title="Horas de juego"
+                        description={playTimeInHours + "/50"}
+                        percentage={Math.floor(playTimeInHours * 2)}
                         footer=""
                     />
 
                     <PerfectionCard
                         title="Mitaritas ganadas"
                         description={"2374/25000"}
-                        percentage={Math.floor(2374 / 25000 * 100)}
-                        footer=""
+                        percentage={Math.floor(2374 * 0.004)}
+                        footer="Demostración, falta implementar"
                     />
 
                     <PerfectionCard
                         title="Puntos de EXP. generados"
                         description={"1721/10000"}
-                        percentage={Math.floor(1721 / 10000 * 100)}
-                        footer=""
+                        percentage={Math.floor(1721 * 0.01)}
+                        footer="Demostración, falta implementar"
                     />
 
                     <PerfectionCard
                         title="Objetos obtenidos"
                         description={"36/100"}
-                        percentage={Math.floor(36 / 100 * 100)}
-                        footer=""
+                        percentage={36}
+                        footer="Demostración, falta implementar"
                     />
 
                     <PerfectionCard
                         title="Logros obtenidos"
                         description={"28/50"}
-                        percentage={Math.floor(28 / 50 * 100)}
-                        footer=""
+                        percentage={28 * 2}
+                        footer="Demostración, falta implementar"
                     />
                   </div>
                 </AccordionContent>

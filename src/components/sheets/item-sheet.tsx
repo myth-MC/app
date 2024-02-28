@@ -177,14 +177,14 @@ export const ItemSheet = ({ open, setIsOpen, item }: Props) => {
                 <section className="space-y-2">
                   <h3 className="font-semibold">Rareza</h3>
                   <Separator/>
-                  {item ? item.rarity : "No hay información"}
+                  <p className="mt-1 text-neutral-500 dark:text-neutral-400 text-sm">{item ? item.rarity : "No hay información"}</p>
                 </section>
 
                 <section className="space-y-2">
                   <h3 className="font-semibold">Disponibilidad</h3>
                   <Separator/>
 
-                  Desde el {item ? item.since : "N/A"} hasta el {item ? item.until : "N/A"}
+                  <p className="mt-1 text-neutral-500 dark:text-neutral-400 text-sm">Desde el {item ? item.since : "N/A"} hasta el {item ? item.until : "N/A"}</p>
                 </section>
 
                 <section className="space-y-2">
