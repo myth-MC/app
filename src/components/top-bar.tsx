@@ -45,6 +45,10 @@ export function Topbar() {
           <Image
             width={36}
             height={36}
+            onClick={() => router.push({
+              pathname: "/",
+              query: router.query
+            })}
             className="h-9 w-auto"
             src="/favicon.png"
             alt="app.mythmc.ovh logo"
