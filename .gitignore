@@ -5,6 +5,7 @@
 /.pnp
 .pnp.js
 pnpm-lock.yaml
+package-lock.json
 
 # testing
 /coverage
@@ -42,6 +43,3 @@ venv/
 # vscode settings
 .vscode/
 .env
-
-# raw game data
-/src/research/raw_data/*.json
