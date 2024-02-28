@@ -10,7 +10,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>mythMC | Estadísticas</title>
+        <title>🌟 mythMC | Estadísticas</title>
       </Head>
       <main
           className={`flex min-h-[calc(100vh-65px)]  flex-col md:border-l border-neutral-200 dark:border-neutral-800 pt-2 pb-8 px-5 md:px-8 items-center`}

@@ -34,7 +34,7 @@ export default function Player() {
 
   useEffect(() => {
     if(data?.username) {
-      document.title = "mythMC | Datos de " + data.username;
+      document.title = "🌟 mythMC | Datos de " + data.username;
     }
   }, [data]);
 
@@ -55,10 +55,10 @@ export default function Player() {
   return (
     <>
       <Head>
-        <title>mythMC | Datos del jugador</title>
+        <title>🌟 mythMC | Datos del jugador</title>
         <meta
           name="title"
-          content="mythMC | Datos del jugador"
+          content="🌟 mythMC | Datos del jugador"
         />
         <meta
           name="description"

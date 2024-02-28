@@ -104,6 +104,8 @@ export const PlayerNameInputCard = ({
                         <FormControl>
                           <Input
                             id="test"
+                            autoComplete="off"
+                            placeholder="Introduce aquí el nombre"
                             {...field}
                           />
                         </FormControl>

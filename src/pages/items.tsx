@@ -91,7 +91,7 @@ export default function Items() {
     setObtainedItems(new Set(["Objeto de Prueba"]));
 
     if(data?.username) {
-      document.title = "mythMC | Objetos de " + data.username;
+      document.title = "🌟 mythMC | Objetos de " + data.username;
     }
 
     /*
@@ -105,10 +105,10 @@ export default function Items() {
   return (
     <>
       <Head>
-        <title>mythMC | Objetos</title>
+        <title>🌟 mythMC | Objetos</title>
         <meta
             name="title"
-            content="mythMC | Objetos"
+            content="🌟 mythMC | Objetos"
         />
         <meta
             name="description"

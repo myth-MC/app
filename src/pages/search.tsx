@@ -47,10 +47,10 @@ export default function Search() {
     return (
         <>
             <Head>
-                <title>mythMC | Buscar</title>
+                <title>🌟 mythMC | Búsqueda</title>
                 <meta
                     name="title"
-                    content="mythMC | Buscar"
+                    content="🌟 mythMC | Búsqueda"
                 />
                 <meta
                     name="description"

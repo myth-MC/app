@@ -59,7 +59,7 @@ export default function Account() {
   return (
     <>
       <Head>
-        <title>mythMC | Ajustes</title>
+        <title>🌟 mythMC | Ajustes</title>
         <meta
             name="description"
             content="mythMC es un servidor de Minecraft hispanohablante con una gran comunidad. Puedes usar app.mythmc.ovh para consultar tus estadísticas personales y otros recursos útiles en cualquier momento. ¿A qué esperas?"

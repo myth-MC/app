@@ -11,7 +11,7 @@ export default function Document() {
                 />
                 <meta property="og:type" content="website"/>
                 <meta property="og:url" content="https://app.mythmc.ovh/"/>
-                <meta property="og:title" content="mythMC | Estadísticas"/>
+                <meta property="og:title" content="🌟 mythMC | Estadísticas"/>
                 <meta
                     property="og:description"
                     content="Consulta tus estadísticas de mythMC."
@@ -23,7 +23,7 @@ export default function Document() {
 
                 <meta name="twitter:card" content="summary"/>
                 <meta name="twitter:url" content="https://app.mythmc.ovh"/>
-                <meta name="twitter:title" content="mythMC | Estadísticas"/>
+                <meta name="twitter:title" content="🌟 mythMC | Estadísticas"/>
                 <meta
                     name="twitter:description"
                     content="Consulta tus estadísticas de mythMC."
