@@ -83,7 +83,7 @@ export default function Search() {
                         <CardContent>
                             <Form {...form}>
                                 <form
-                                    className="grid gap-4"
+                                    className="grid gap-5"
                                     onSubmit={form.handleSubmit(onSubmit)}
                                 >
                                     <div className="grid grid-cols-1 md:grid-cols-1 gap-4 items-center">
@@ -134,7 +134,6 @@ export default function Search() {
                                             </>
                                         )}
                                     </div>
-
 
                                     <Button
                                         variant="outline"

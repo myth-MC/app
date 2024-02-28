@@ -33,6 +33,15 @@ interface Props {
   showTitle: boolean;
 }
 
+
+const inputSchema = v.object({
+  name: v.string([
+    v.minLength(3, "El nombre debe contener al menos 3 caracteres"),
+    v.maxLength(16, "El nombre no puede superar los 16 caracteres"),
+    v.toTrimmed(),
+  ]),
+});
+
 export const PlayerNameInputCard = ({
   title,
   Icon,
@@ -43,13 +52,20 @@ export const PlayerNameInputCard = ({
 
   const router = useRouter();
 
-  const inputSchema = v.object({
-    input: v.string([v.maxLength(16, 'El nombre es demasiado largo')]),
+  const form = useForm<v.Input<typeof inputSchema>>({
+    resolver: valibotResolver(inputSchema as any),
   });
 
-  const form = useForm<v.Input<typeof inputSchema>>({
-    resolver: valibotResolver(inputSchema),
-  });
+  const onSubmit = async (values: v.Input<typeof inputSchema>) => {
+    setOpen(false);
+
+    await router.push({
+      pathname: "/player",
+      query: {username: values.name}
+    }).then(() => {
+      toast.info("Estás viendo las estadísticas de " + values.name);
+    })
+  };
 
   const [open, setOpen] = useState(false);
 
@@ -76,36 +92,25 @@ export const PlayerNameInputCard = ({
           <Form {...form}>
             <form
               className="w-full space-y-6"
-              onSubmit={(e) => e.preventDefault()}
+              onSubmit={form.handleSubmit(onSubmit)}
             >
               <FormField
                 control={form.control}
-                name="input"
+                name="name"
                 render={({ field }) => (
                   <FormItem>
                     <div className="flex justify-between">
                       <div className="flex w-2/3 items-center space-x-2">
                         <FormControl>
                           <Input
-                            type="string"
-                            min={0}
-                            onChange={(e) => setValue(e.target.value)}
+                            id="test"
+                            {...field}
                           />
                         </FormControl>
                       </div>
 
                       <Button
                         type="submit"
-                        onClick={() => {
-                          router.push({
-                            pathname: router.pathname,
-                            query: { username: value }
-                          })
-
-                          setOpen(false);
-
-                          toast.info("Estás viendo las estadísticas de " + value)
-                        }}
                       >
                         Buscar
                       </Button>
