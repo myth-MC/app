@@ -12,7 +12,7 @@ import {
 } from "@heroicons/react/24/outline";
 
 import { toast } from "sonner";
-import { usePlayer } from "@/contexts/mythplayer-context";
+import { usePlayer } from "@/contexts/player-context";
 import { LoginRedirect } from "@/components/loginRedirect";
 import {BetaFeatureInfo} from "@/components/betaFeatureInfo";
 

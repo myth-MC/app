@@ -18,7 +18,7 @@ import { Drawer, DrawerContent } from "@/components/ui/drawer";
 import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "../ui/scroll-area";
 import {useRouter} from "next/router";
-import {usePlayer} from "@/contexts/mythplayer-context";
+import {usePlayer} from "@/contexts/player-context";
 import Image from "next/image";
 import {toast} from "sonner";
 import {PlayerNameInputCard} from "@/components/cards/player-name-input-card";

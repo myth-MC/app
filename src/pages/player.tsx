@@ -16,7 +16,7 @@ import {
 } from "@tabler/icons-react";
 
 import {useRouter} from "next/router";
-import {usePlayer} from "@/contexts/mythplayer-context";
+import {usePlayer} from "@/contexts/player-context";
 import {BetaFeatureInfo} from "@/components/betaFeatureInfo";
 import {useEffect} from "react";
 import achievements from "@/data/achievements.json";
@@ -24,7 +24,6 @@ import {AchievementCard} from "@/components/cards/achievement-card";
 import {Card, CardHeader, CardTitle} from "@/components/ui/card";
 import {PercentageIndicator} from "@/components/percentage";
 import {PerfectionCard} from "@/components/cards/perfection-card";
-import Image from "next/image";
 
 export default function Player() {
   const router = useRouter();
@@ -37,9 +36,9 @@ export default function Player() {
   const prestige = data?.prestige ?? "0";
   const kills = data?.kills ?? "0";
   const deaths = data?.deaths ?? "0";
-  const firstJoin = data?.firstJoin ?? "No hay información";
-  const lastJoin = data?.lastJoin ?? "No hay información";
-  const playTimeInHours = Math.floor((data?.playTime ?? "0") / 3600);
+  const firstJoin = data?.first_join ?? "No hay información";
+  const lastJoin = data?.last_join ?? "No hay información";
+  const playTimeInHours = Math.floor((data?.play_time ?? "0") / 3600);
 
   useEffect(() => {
     if(data?.username) {

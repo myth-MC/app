@@ -13,7 +13,7 @@ import { Command, CommandInput } from "@/components/ui/command";
 import {IconClock, IconQuestionMark, IconDeviceGamepad} from "@tabler/icons-react";
 import {ItemCard} from "@/components/cards/item-card";
 import {useRouter} from "next/router";
-import {usePlayer} from "@/contexts/mythplayer-context";
+import {usePlayer} from "@/contexts/player-context";
 
 const gamemode = [
   {

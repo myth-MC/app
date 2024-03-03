@@ -22,7 +22,7 @@ import { Separator } from "@/components/ui/separator";
 import {HamburgerMenuIcon} from "@radix-ui/react-icons";
 
 import {useRouter} from "next/router";
-import {usePlayer} from "@/contexts/mythplayer-context";
+import {usePlayer} from "@/contexts/player-context";
 import {toast} from "sonner";
 import {PlayerNameInputCard} from "@/components/cards/player-name-input-card";
 import {IconSearch} from "@tabler/icons-react";

@@ -16,7 +16,7 @@ const fetcher = async (url: any) => {
 }
 
 export const usePlayer = ( username: any ) => {
-    let { data, error } = useSWR('https://api.mythmc.ovh/v1/users/'+ username + '/player_info', fetcher);
+    let { data, error } = useSWR('https://api.mythmc.ovh/v1/users/'+ username, fetcher);
 
     return { data, error };
 };
